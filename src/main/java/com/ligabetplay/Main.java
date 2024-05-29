@@ -6,20 +6,20 @@ import java.util.Scanner;
 import com.ligabetplay.models.*;
 
 public class Main {
+    
     public static void main(String[] args) {
         // Reportes
-        
-        
-        // Se debe instanciar el scanner//
         Scanner sc = new Scanner(System.in);
-        // Creación del Array equipos
         ArrayList<Equipos> equipo = new ArrayList<>();
 
         // Creación del Array Partido
         ArrayList<Partidos> partido = new ArrayList<>();
-
+        // Se debe instanciar el scanner//
+        
+        // Creación del Array equipos
         
 
+        // Creación del Array Partido
         principal: while (true) {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Ingresar Equipo \n2. Ingresar Datos Partido \n3. Reportes \n4.Terminar");
@@ -117,84 +117,30 @@ public class Main {
                                 });
                                 break registrarPartido;
                             }
-
-                            // String ganador;
-                            // String perdedor;
-                            
-
-                            
-
                         }
-
-                            
-
-
                     }
                     break;
                 case 3:
-                    reportes: while (true) {
-                        System.out.print("Selecione el reporte que desea visualizar: \n1. Equipo que más goles anotó \n2. Equipo con más puntos \n3. Equipo que ganó más partidos \n4. Total de goles por equipo \n5. Promedio de goles anotados en el torneo \n6. Regresar");
-
-                        int op = sc.nextInt();
-
-
-                        if (op == 1) {
-                            Equipos equipoMasGoles = null;
-
-                            // Recorrer la lista
-                            for (Equipos equipos : equipo) {
-                                if (equipoMasGoles == null || equipos.getGf() > equipoMasGoles.getGf()) {
-                                    equipoMasGoles = equipos;
-                                }
-                            }
-
-                            // Mostrar equipo con más goles:
-                            if (equipoMasGoles != null) {
-                                System.out.println("Equipo con más goles: " + equipoMasGoles.getNombreEquipo());
-                            }
-                            
-                        } else if (op == 2) {
-                            Equipos equipoMasPuntos = null;
-                            for (Equipos equipos : equipo) {
-                                if (equipoMasPuntos == null || equipos.getTp() > equipoMasPuntos.getTp()) {
-                                    equipoMasPuntos = equipos;
-                                }
-                            }
-
-                            if (equipoMasPuntos != null) {
-                                System.out.println("Equipo con más goles: " + equipoMasPuntos.getNombreEquipo());
-                            }
-                        }else if (op == 3) {
-                            Equipos equipoMasPartidosGanados = null;
-                            for (Equipos equipos : equipo) {
-                                if (equipoMasPartidosGanados == null || equipos.getPg() > equipoMasPartidosGanados.getPg()) {
-                                    equipoMasPartidosGanados = equipos;
-                                }
-                            }
-
-                            if (equipoMasPartidosGanados != null) {
-                                System.out.println("Equipo con más goles: " + equipoMasPartidosGanados.getNombreEquipo());
-                            }
-                        }else if (op == 4) {
-                            int totalGoles = 0;
-                            for (Equipos equipos : equipo) {
-                                totalGoles += equipos.getGf();
-                            }
-                            System.out.println(totalGoles);
-                        }else if (op == 5) {
-                            int totalGoles = 0;
-                            for (Equipos equipos : equipo) {
-                                totalGoles += equipos.getGf();
-                              
-                            }
-                            System.out.println(totalGoles/equipo.size()); 
-                        }else {
-                            break reportes;
-                        }
+                
+                reportes: while (true) {
+                    System.out.print("Selecione el reporte que desea visualizar: \n1. Equipo que más goles anotó \n2. Equipo con más puntos \n3. Equipo que ganó más partidos \n4. Total de goles por equipo \n5. Promedio de goles anotados en el torneo \n6. Regresar \n");
+        
+                    int op = sc.nextInt();
+        
+                    if (op == 1) {
+                        registroMasGoles(equipo);
+                    } else if (op == 2) {
+                        registroMasPuntos(equipo);
+                    }else if (op == 3) {
+                        registroMasPartidosGanados(equipo);
+                    }else if (op == 4) {
+                        registroTotalGoles(equipo);
+                    }else if (op == 5) {
+                         registroPromedioGoles(equipo);
+                    }else {
+                        break reportes;
                     }
-                    
-
-
+                }
                 case 4:
                     System.out.println("Gracias por utilizar nuestros servicios");
                     break principal;
@@ -205,11 +151,6 @@ public class Main {
             }
         }
         
-
-
-
-
-
     }
 
     public static Equipos buscarPorId(int id, ArrayList<Equipos> team) {
@@ -222,6 +163,64 @@ public class Main {
         }
 
         return busqueda;
+    }
+
+    public static void registroMasGoles(ArrayList<Equipos> equipo){
+        Equipos equipoMasGoles = null;
+                        // Recorrer la lista
+                        for (Equipos equipos : equipo) {
+                            if (equipoMasGoles == null || equipos.getGf() > equipoMasGoles.getGf()) {
+                                equipoMasGoles = equipos;
+                            }
+                        }
+        
+                        // Mostrar equipo con más goles:
+                        if (equipoMasGoles != null) {
+                            System.out.println("Equipo con más goles: " + equipoMasGoles.getNombreEquipo());
+                        }
+    }
+
+    public static void registroMasPuntos(ArrayList<Equipos> equipo){    
+        Equipos equipoMasPuntos = null;
+                        for (Equipos equipos : equipo) {
+                            if (equipoMasPuntos == null || equipos.getTp() > equipoMasPuntos.getTp()) {
+                                equipoMasPuntos = equipos;
+                            }
+                        }
+        
+                        if (equipoMasPuntos != null) {
+                            System.out.println("Equipo con más puntos: " + equipoMasPuntos.getNombreEquipo());
+                        }
+    }
+
+    public static void registroMasPartidosGanados(ArrayList<Equipos> equipo) {
+        Equipos equipoMasPartidosGanados = null;
+                        for (Equipos equipos : equipo) {
+                            if (equipoMasPartidosGanados == null || equipos.getPg() > equipoMasPartidosGanados.getPg()) {
+                                equipoMasPartidosGanados = equipos;
+                            }
+                        }
+        
+                        if (equipoMasPartidosGanados != null) {
+                            System.out.println("Equipo con más partidos ganados: " + equipoMasPartidosGanados.getNombreEquipo());
+                        }
+    }
+
+    public static void registroTotalGoles(ArrayList<Equipos> equipo){
+        int totalGoles = 0;
+                        for (Equipos equipos : equipo) {
+                            totalGoles += equipos.getGf();
+                        }
+                        System.out.println(totalGoles);
+    }
+
+    public static void registroPromedioGoles(ArrayList<Equipos> equipo){
+        int totalGoles = 0;
+                        for (Equipos equipos : equipo) {
+                            totalGoles += equipos.getGf();
+                          
+                        }
+                        System.out.println(totalGoles/equipo.size());
     }
 
     // El void se usa cuando no se retorna nada
