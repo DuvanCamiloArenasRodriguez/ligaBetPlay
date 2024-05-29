@@ -137,10 +137,14 @@ public class Main {
                         registroTotalGoles(equipo);
                     }else if (op == 5) {
                          registroPromedioGoles(equipo);
-                    }else {
+                    }else if (op == 6){
+                        
                         break reportes;
+                    }else {
+                        System.out.println("Debe ingresar una opción válida");
                     }
                 }
+                break;
                 case 4:
                     System.out.println("Gracias por utilizar nuestros servicios");
                     break principal;
