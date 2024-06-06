@@ -1,5 +1,6 @@
 package com.ligabetplay;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,14 +11,45 @@ public class Main {
     public static void main(String[] args) {
         // Reportes
         Scanner sc = new Scanner(System.in);
+        // Creación del Array equipos
         ArrayList<Equipos> equipo = new ArrayList<>();
 
         // Creación del Array Partido
         ArrayList<Partidos> partido = new ArrayList<>();
-        // Se debe instanciar el scanner//
         
-        // Creación del Array equipos
+        // Creación del Array Jugador
+        ArrayList<Jugador> jugador = new ArrayList<>();
+
+        // Creación del Array Cuerpo Médico
+        ArrayList<CuerpoMedico> cuerpoMedico = new ArrayList<>();
         
+        // Creación del Array Cuerpo Técnico
+        ArrayList<CuerpoTecnico> cuerpoTecnico = new ArrayList<>();
+        
+        // Array rol Cuerpo Técnico
+        String [] rolCuerpoTecnico = {"Técnico", "Asistente Técnico", "Preparador físico"};
+
+        // Array rol cuerpo médico
+        String [] rolCuerpoMedico = {"Médico", "Fisioterapeuta"};
+
+        // Array posiciones
+        String[] posiciones = {
+            "Portero",
+            "Defensa Central",
+            "Lateral Derecho",
+            "Lateral Izquierdo",
+            "Defensa Central (Sweeper)",
+            "Centrocampista Defensivo",
+            "Centrocampista Central",
+            "Centrocampista Ofensivo",
+            "Extremo Derecho",
+            "Extremo Izquierdo",
+            "Delantero Centro",
+            "Segundo Delantero",
+            "Extremo Derecho (Delantero)",
+            "Extremo Izquierdo (Delantero)"
+    };
+
 
         // Creación del Array Partido
         principal: while (true) {
@@ -29,10 +61,103 @@ public class Main {
                 case 1:
                     registrarEquipo: while (true) {
                         int generarId = equipo.size() + 1;
+                        int generarIdCuerpoTecnico = cuerpoTecnico.size() + 1;
+                        int generarIdCuerpoMedico = cuerpoMedico.size() + 1;
+                        int generarIdJugador = jugador.size() + 1;
+
                         // Ingresar Equipo
                         System.out.println("Ingrese el nombre del equipo a registrar:");
                         String nombreEquipo = sc.next();
                         equipo.add(new Equipos(generarId, nombreEquipo, 0, 0, 0, 0, 0, 0, 0));
+                        
+
+                        // Ingresar cuerpo técnico
+                        registrarCuerpoTecnico: while (true) {
+                            System.out.println("Seleccione el rol del cuerpo técnico");
+                            for (int i = 0; i < rolCuerpoTecnico.length; i++) {
+                                System.out.println(i+1 + ". " + rolCuerpoTecnico[i]);
+                            }
+                            System.out.println("Seleccione el rol");
+                            String rol = rolCuerpoTecnico[sc.nextInt()-1];
+
+                            System.out.println("Ingrese el nombre");
+                            String nombreCuerpoTecnico = sc.next();
+
+                            System.out.println("Ingrese el apellido");
+                            String apellidoCuerpoTecnico = sc.next();
+
+                            System.out.println("Ingrese la edad");
+                            String edadCuerpoTecnico = sc.next();
+                           
+                            cuerpoTecnico.add(new CuerpoTecnico(generarIdCuerpoTecnico, nombreCuerpoTecnico, apellidoCuerpoTecnico, edadCuerpoTecnico, rol, generarId));
+
+                            System.out.println("1. Ingrear otro miembro del cuerpo técnico \nx. Volver");
+                            String op = sc.next();
+                            if (op.equals("x")) {
+                                break registrarCuerpoTecnico;
+                            }
+                        }
+
+                        registrarCuerpoMedico: while (true) {
+                            System.out.println("Seleccione el rol del cuerpo médico");
+                            for (int i = 0; i < rolCuerpoMedico.length; i++) {
+                                System.out.println(i+1 + ". " + rolCuerpoMedico[i]);
+                            }
+                            System.out.println("Seleccione el rol");
+                            String rol = rolCuerpoMedico[sc.nextInt()-1];
+
+                            System.out.println("Ingrese el nombre");
+                            String nombreCuerpoMedico = sc.next();
+
+                            System.out.println("Ingrese el apellido");
+                            String apellidoCuerpoMedico = sc.next();
+
+                            System.out.println("Ingrese la edad");
+                            String edadCuerpoMedico = sc.next();
+
+                            cuerpoMedico.add(new CuerpoMedico(generarIdCuerpoMedico, nombreCuerpoMedico, apellidoCuerpoMedico, edadCuerpoMedico, rol, generarId));
+
+                            System.out.println("1. Ingrear otro miembro del cuerpo Médico \nx. Volver");
+                            String op = sc.next();
+                            if (op.equals("x")) {
+                                break registrarCuerpoMedico;
+                            }
+                        }
+
+                        registrarJugador: while (true) {
+                            System.out.println("Ingrese el nombre");
+                            String nombreJugador = sc.next();
+
+                            System.out.println("Ingrese el apellido");
+                            String apellidoJugador = sc.next();
+
+                            System.out.println("Ingrese la edad");
+                            String edadJugador = sc.next();
+
+                            System.out.println("Ingrese el dorsal");
+                            int dorsalJugador = sc.nextInt();
+
+                            System.out.println("Seleccione la posición de juego: ");
+                            for (int i = 0; i < posiciones.length; i++) {
+                                System.out.println(i+1 + ". " + posiciones[i]);
+                            }
+                            String posicionJuego = posiciones[sc.nextInt()];
+
+                            System.out.println("Ingrese la nacionalidad del jugador");
+                            String nacionalidadJugador = sc.next();
+
+                            LocalDate fechaIngresoJugador = LocalDate.now();
+
+                            jugador.add(new Jugador(generarIdJugador, nombreJugador, apellidoJugador, edadJugador, generarIdJugador, dorsalJugador, posicionJuego, nacionalidadJugador, fechaIngresoJugador));
+
+                            System.out.println("1. Ingrear otro jugador \nx. Volver");
+                            String op = sc.next();
+                            if (op.equals("x")) {
+                                break registrarJugador;
+                            }
+
+                        }
+
                         System.out.println("1. Ingrear otro Equipo \nx. Volver");
                         String op = sc.next();
                         if (op.equals("x")) {
@@ -258,5 +383,7 @@ public class Main {
             
         }
     }
+
+
 
 }
