@@ -59,5 +59,15 @@ public class Persona {
         this.rol = rol;
     }
 
+
+    public int getIdEquipo() {
+        return idEquipo;
+    }
+
+
+    public void setIdEquipo(int idEquipo) {
+        this.idEquipo = idEquipo;
+    }
+
     
 }

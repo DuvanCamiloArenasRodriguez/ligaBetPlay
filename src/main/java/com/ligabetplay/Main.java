@@ -125,10 +125,10 @@ public class Main {
                         }
 
                         registrarJugador: while (true) {
-                            System.out.println("Ingrese el nombre");
+                            System.out.println("Ingrese el nombre del jugador");
                             String nombreJugador = sc.next();
 
-                            System.out.println("Ingrese el apellido");
+                            System.out.println("Ingrese el apellido del jugador");
                             String apellidoJugador = sc.next();
 
                             System.out.println("Ingrese la edad");
@@ -197,29 +197,101 @@ public class Main {
                                 System.out.println(equipos.getId() + " " + equipos.getNombreEquipo());
                             });
 
+                            // Equipo visitante
                             System.out.println("Ingrese el id del equipo visitante: ");
-                            // myPartido.setEquipoVisitante(sc.nextInt());
                             Equipos equipoVisitante = buscarPorId(sc.nextInt(), equipo);
+                            System.out.println("Ingrese el marcador del equipo visitante: ");
+                            // myPartido.setMarcadorVisitante(marcadorVisitante);
+                            int marcadorVisitante = sc.nextInt();
+                            
+                            System.out.println(equipoVisitante.getNombreEquipo());
+                            // Mostrar los jugadores que pertenecen al equipo. Debe hacer lo mismo para los jugadores locales
+                            if (marcadorVisitante > 0) {
+                                registrarGoles: while(true){
+                                    System.out.println("Lista de Jugadores: ");
+                                    for(Jugador j: jugador){
+                                        if (j.getIdEquipo() == equipoVisitante.getId()) {
+                                            System.out.println(j.getId() + " " + j.getNombre().concat(j.getApellido()));
+                                        }
+                                    }
+                                    System.out.println("Seleccione el jugador que hizo gol: ");
+                                    int jugadorGol =Integer.parseInt(sc.nextLine());
+                                    Jugador objetoJugadorVisitante =  buscarPorIdJugador(jugadorGol, jugador);
+
+                                    System.out.println("Ingrese el número de goles que anotó " + objetoJugadorVisitante.getNombre());
+                                    int golesAnotadosJuagorVisitante = sc.nextInt();
+
+                                    objetoJugadorVisitante.setGolesAnotados(objetoJugadorVisitante.getGolesAnotados() + golesAnotadosJuagorVisitante);
+
+                                    System.out.println("1. Ingrear otro Jugador \nx. Volver");
+                                    String op = sc.next();
+                                    if (op.equals("x")) {
+                                        break registrarGoles;
+                                    }
+                                }
+
+                                System.out.println("1.Registrar tarjetas a jugador \nx.Seguir");
+                                int op = sc.nextInt();
+                                if (op == 1) {
+                                    registrarTarjetas: while (true) {
+                                        System.out.println("Lista de Jugadores: ");
+                                        for(Jugador j: jugador){
+                                            if (j.getIdEquipo() == equipoVisitante.getId()) {
+                                                System.out.println(j.getId() + " " + j.getNombre().concat(j.getApellido()));
+                                            }
+                                        }
+                                        System.out.println("Seleccione el jugador: ");
+                                        int idJugadorVisitante =Integer.parseInt(sc.nextLine());
+                                        Jugador objetoTarjetaVisitante =  buscarPorIdJugador(idJugadorVisitante, jugador);
+
+                                        System.out.println("Registre el tipo de tarjeta del jugador: ");
+                                        System.out.println("1. Tarjeta Roja \n2.Tarjeta Amarilla");
+                                        int tarjeta = sc.nextInt();
+                                        if (tarjeta == 1) {
+                                            objetoTarjetaVisitante.setGolesAnotados(objetoTarjetaVisitante.getTotalTr() + 1);
+                                        } else if (tarjeta == 2) {
+                                            objetoTarjetaVisitante.setGolesAnotados(objetoTarjetaVisitante.getTotalTa() + 1);
+                                        }
+                                        System.out.println("1.Ingresar tarjetas a otro jugador Visitante \nx. Volver");
+                                        String ingresarTarget = sc.next();
+                                        if (ingresarTarget.equals("x")) {
+                                            break registrarTarjetas;
+                        }
+                                    }
+                                }
+                                
+                                
+                            }
                             
 
-                            System.out.println(equipoVisitante.getNombreEquipo());
 
+                            // Equipo Local
                             System.out.println("Ingrese el id del equipo Local:");
                             // myPartido.setEquipoLocal(sc.next());
                             Equipos equipoLocal = buscarPorId(sc.nextInt(), equipo);
-
-                            // FALTA AÑADIR UN IF
-
-                            System.out.println("Ingrese el marcador del equipo visitante: ");
-                            // myPartido.setMarcadorVisitante(marcadorVisitante);
-
-                            int marcadorVisitante = sc.nextInt();
 
                             System.out.println("Ingrese el marcador del equipo local: ");
                             // myPartido.setMarcadorLocal(sc.nextInt());
 
                             int marcadorLocal = sc.nextInt();
                     
+                            if (marcadorLocal >0) {
+
+                                            
+                                
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
                             if (marcadorVisitante > marcadorLocal) {
                                 modificacionEquipo(equipoVisitante, equipoLocal, marcadorVisitante, marcadorLocal);
                             } else {
@@ -280,6 +352,18 @@ public class Main {
             }
         }
         
+    }
+
+    public static Jugador buscarPorIdJugador(int id, ArrayList<Jugador> team) {
+        Jugador busqueda = null;
+        
+        for (Jugador jugador : team) {
+            if (jugador.getId() == id) {
+                busqueda = jugador;
+            }
+        }
+
+        return busqueda;
     }
 
     public static Equipos buscarPorId(int id, ArrayList<Equipos> team) {
